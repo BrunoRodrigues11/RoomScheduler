@@ -1,0 +1,5 @@
+{
+  "name": "RoomScheduler Pro",
+  "description": "A modern, intuitive meeting room booking system designed to replace spreadsheet tracking. Features conflict detection, room management, and a visual daily timeline.",
+  "requestFramePermissions": []
+}
