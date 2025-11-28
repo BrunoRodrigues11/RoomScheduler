@@ -18,7 +18,17 @@ export interface Booking {
   createdAt: number;
 }
 
-export type ViewMode = 'calendar' | 'rooms' | 'list';
+export type Role = 'admin' | 'sec' | 'common';
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  password?: string; // In a real app, this should be hashed. Here stored as plain text for demo.
+  role: Role;
+}
+
+export type ViewMode = 'calendar' | 'rooms' | 'list' | 'users';
 
 export const BUSINESS_START_HOUR = 7;
 export const BUSINESS_END_HOUR = 20;

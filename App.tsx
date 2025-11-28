@@ -4,10 +4,14 @@ import { RoomManager } from './components/RoomManager';
 import { CalendarView } from './components/CalendarView';
 import { BookingList } from './components/BookingList';
 import { BookingModal } from './components/BookingModal';
+import { Login } from './components/Login';
+import { UserManager } from './components/UserManager';
 import { Room, Booking, ViewMode } from './types';
 import { StorageService } from './services/storage';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
 
-const App: React.FC = () => {
+const AppContent: React.FC = () => {
+  const { isAuthenticated, user } = useAuth();
   const [view, setView] = useState<ViewMode>('calendar');
   const [rooms, setRooms] = useState<Room[]>([]);
   const [bookings, setBookings] = useState<Booking[]>([]);
@@ -20,9 +24,11 @@ const App: React.FC = () => {
 
   // Load initial data
   useEffect(() => {
-    setRooms(StorageService.getRooms());
-    setBookings(StorageService.getBookings());
-  }, []);
+    if (isAuthenticated) {
+      setRooms(StorageService.getRooms());
+      setBookings(StorageService.getBookings());
+    }
+  }, [isAuthenticated]);
 
   // Persist Rooms
   const handleSetRooms = (newRooms: Room[]) => {
@@ -64,6 +70,10 @@ const App: React.FC = () => {
     setIsModalOpen(true);
   };
 
+  if (!isAuthenticated) {
+    return <Login />;
+  }
+
   return (
     <Layout currentView={view} onViewChange={setView}>
       {view === 'calendar' && (
@@ -91,6 +101,10 @@ const App: React.FC = () => {
         />
       )}
 
+      {view === 'users' && user?.role === 'admin' && (
+        <UserManager />
+      )}
+
       <BookingModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
@@ -103,6 +117,14 @@ const App: React.FC = () => {
         initialRoomId={modalInitialRoomId}
       />
     </Layout>
+  );
+};
+
+const App: React.FC = () => {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 };
 
