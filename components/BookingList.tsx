@@ -30,8 +30,8 @@ export const BookingList: React.FC<BookingListProps> = ({ bookings, rooms, onEdi
     <div className="p-8 h-full overflow-y-auto">
       <header className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-           <h2 className="text-2xl font-bold text-slate-800">Lista de Agendamentos</h2>
-           <p className="text-slate-500">Histórico completo de reservas.</p>
+           <h2 className="text-2xl font-bold text-slate-800 dark:text-white">Lista de Agendamentos</h2>
+           <p className="text-slate-500 dark:text-slate-400">Histórico completo de reservas.</p>
         </div>
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
@@ -40,15 +40,15 @@ export const BookingList: React.FC<BookingListProps> = ({ bookings, rooms, onEdi
             placeholder="Buscar por nome, sala..." 
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="pl-9 pr-4 py-2 bg-white text-slate-900 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none w-full md:w-64"
+            className="pl-9 pr-4 py-2 bg-white dark:bg-slate-700 text-slate-900 dark:text-white border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none w-full md:w-64"
           />
         </div>
       </header>
 
-      <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm text-slate-600">
-            <thead className="bg-slate-50 text-slate-800 font-semibold border-b border-slate-200">
+          <table className="w-full text-left text-sm text-slate-600 dark:text-slate-300">
+            <thead className="bg-slate-50 dark:bg-slate-700 text-slate-800 dark:text-slate-200 font-semibold border-b border-slate-200 dark:border-slate-600">
               <tr>
                 <th className="px-6 py-4">Data</th>
                 <th className="px-6 py-4">Horário</th>
@@ -57,7 +57,7 @@ export const BookingList: React.FC<BookingListProps> = ({ bookings, rooms, onEdi
                 <th className="px-6 py-4 text-right">Ações</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-700">
               {filteredBookings.length === 0 ? (
                 <tr>
                   <td colSpan={5} className="px-6 py-12 text-center text-slate-400">
@@ -66,9 +66,9 @@ export const BookingList: React.FC<BookingListProps> = ({ bookings, rooms, onEdi
                 </tr>
               ) : (
                 filteredBookings.map((booking) => (
-                  <tr key={booking.id} className="hover:bg-slate-50 transition-colors">
+                  <tr key={booking.id} className="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
                     <td className="px-6 py-4 whitespace-nowrap">
-                       <div className="flex items-center gap-2 font-medium text-slate-900">
+                       <div className="flex items-center gap-2 font-medium text-slate-900 dark:text-white">
                          <Calendar className="w-4 h-4 text-slate-400" />
                          {format(parseISO(booking.date), 'dd/MM/yyyy')}
                        </div>
@@ -86,13 +86,13 @@ export const BookingList: React.FC<BookingListProps> = ({ bookings, rooms, onEdi
                        </div>
                     </td>
                     <td className="px-6 py-4">
-                      <div className="font-medium text-slate-900">{booking.requesterName}</div>
-                      <div className="text-xs text-slate-500 truncate max-w-[200px]">{booking.description}</div>
+                      <div className="font-medium text-slate-900 dark:text-white">{booking.requesterName}</div>
+                      <div className="text-xs text-slate-500 dark:text-slate-400 truncate max-w-[200px]">{booking.description}</div>
                     </td>
                     <td className="px-6 py-4 text-right">
                       <button 
                         onClick={() => onEdit(booking)}
-                        className="text-blue-600 hover:text-blue-800 font-medium text-xs bg-blue-50 px-3 py-1.5 rounded-md hover:bg-blue-100 transition-colors"
+                        className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium text-xs bg-blue-50 dark:bg-blue-900/20 px-3 py-1.5 rounded-md hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-colors"
                       >
                         Gerenciar
                       </button>

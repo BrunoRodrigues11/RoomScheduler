@@ -61,16 +61,16 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
   const timeLabels = Array.from({ length: totalHours + 1 }, (_, i) => BUSINESS_START_HOUR + i);
 
   return (
-    <div className="flex flex-col h-full bg-white">
+    <div className="flex flex-col h-full bg-white dark:bg-slate-800 transition-colors">
       {/* Calendar Header */}
-      <div className="flex flex-col sm:flex-row items-center justify-between px-6 py-4 border-b border-slate-200 gap-4">
+      <div className="flex flex-col sm:flex-row items-center justify-between px-6 py-4 border-b border-slate-200 dark:border-slate-700 gap-4">
         <div className="flex items-center gap-4">
-          <div className="flex items-center bg-slate-100 rounded-lg p-1">
-            <button onClick={prevDay} className="p-1 hover:bg-white rounded-md shadow-sm transition-all text-slate-600"><ChevronLeft className="w-5 h-5"/></button>
-            <button onClick={today} className="px-3 text-sm font-semibold text-slate-700 hover:text-blue-600">Hoje</button>
-            <button onClick={nextDay} className="p-1 hover:bg-white rounded-md shadow-sm transition-all text-slate-600"><ChevronRight className="w-5 h-5"/></button>
+          <div className="flex items-center bg-slate-100 dark:bg-slate-700 rounded-lg p-1">
+            <button onClick={prevDay} className="p-1 hover:bg-white dark:hover:bg-slate-600 rounded-md shadow-sm transition-all text-slate-600 dark:text-slate-300"><ChevronLeft className="w-5 h-5"/></button>
+            <button onClick={today} className="px-3 text-sm font-semibold text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400">Hoje</button>
+            <button onClick={nextDay} className="p-1 hover:bg-white dark:hover:bg-slate-600 rounded-md shadow-sm transition-all text-slate-600 dark:text-slate-300"><ChevronRight className="w-5 h-5"/></button>
           </div>
-          <h2 className="text-xl font-bold text-slate-800 flex items-center gap-2 capitalize">
+          <h2 className="text-xl font-bold text-slate-800 dark:text-white flex items-center gap-2 capitalize">
             <CalendarIcon className="w-5 h-5 text-blue-500" />
             {format(currentDate, "EEEE, d 'de' MMMM", { locale: ptBR })}
           </h2>
@@ -91,7 +91,7 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
           {/* Time Header */}
           <div className="flex mb-4">
             <div className="w-48 flex-shrink-0"></div> {/* Spacer for room names */}
-            <div className="flex-1 flex relative h-8 text-slate-400 text-sm font-medium border-b border-slate-200">
+            <div className="flex-1 flex relative h-8 text-slate-400 dark:text-slate-500 text-sm font-medium border-b border-slate-200 dark:border-slate-700">
               {timeLabels.map((hour, index) => (
                  <div 
                    key={hour} 
@@ -99,7 +99,7 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
                    style={{ left: `${(index / totalHours) * 100}%` }}
                  >
                    <span>{String(hour).padStart(2, '0')}:00</span>
-                   <div className="h-2 w-px bg-slate-300 mt-1"></div>
+                   <div className="h-2 w-px bg-slate-300 dark:bg-slate-600 mt-1"></div>
                  </div>
               ))}
             </div>
@@ -119,17 +119,17 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
                   <div key={room.id} className="flex group">
                     {/* Room Card (Left Column) */}
                     <div className="w-48 flex-shrink-0 pr-4 flex flex-col justify-center">
-                      <div className="font-semibold text-slate-800">{room.name}</div>
-                      <div className="text-xs text-slate-500">{room.location} • {room.capacity} lug.</div>
+                      <div className="font-semibold text-slate-800 dark:text-white">{room.name}</div>
+                      <div className="text-xs text-slate-500 dark:text-slate-400">{room.location} • {room.capacity} lug.</div>
                     </div>
 
                     {/* Timeline Track */}
-                    <div className="flex-1 relative h-16 bg-slate-50 rounded-lg border border-slate-100 group-hover:border-slate-200 transition-colors">
+                    <div className="flex-1 relative h-16 bg-slate-50 dark:bg-slate-700/50 rounded-lg border border-slate-100 dark:border-slate-700 group-hover:border-slate-200 dark:group-hover:border-slate-600 transition-colors">
                       {/* Grid Lines */}
                       {timeLabels.map((_, index) => (
                         <div 
                           key={index}
-                          className="absolute top-0 bottom-0 border-r border-dashed border-slate-200"
+                          className="absolute top-0 bottom-0 border-r border-dashed border-slate-200 dark:border-slate-700/50"
                           style={{ left: `${(index / totalHours) * 100}%` }}
                         />
                       ))}
@@ -142,7 +142,7 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
                             key={booking.id}
                             onClick={() => onEditBooking(booking)}
                             style={style}
-                            className="absolute top-1 bottom-1 rounded-md bg-blue-100 border border-blue-300 text-blue-800 text-xs p-1.5 cursor-pointer hover:bg-blue-200 hover:scale-[1.02] hover:shadow-md transition-all z-10 overflow-hidden whitespace-nowrap"
+                            className="absolute top-1 bottom-1 rounded-md bg-blue-100 dark:bg-blue-900/60 border border-blue-300 dark:border-blue-700 text-blue-800 dark:text-blue-200 text-xs p-1.5 cursor-pointer hover:bg-blue-200 dark:hover:bg-blue-800 hover:scale-[1.02] hover:shadow-md transition-all z-10 overflow-hidden whitespace-nowrap"
                             title={`${booking.startTime} - ${booking.endTime}: ${booking.description}`}
                           >
                             <div className="font-bold truncate">{booking.requesterName}</div>
@@ -153,7 +153,7 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
 
                       {/* Add Button on Empty Slots (Concept: Click anywhere to add) */}
                       <div 
-                        className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity cursor-pointer bg-black/5"
+                        className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity cursor-pointer bg-black/5 dark:bg-white/5"
                         onClick={(e) => {
                             // Don't trigger if clicking a booking
                             if (e.target !== e.currentTarget) return;

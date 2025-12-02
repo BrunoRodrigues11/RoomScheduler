@@ -9,6 +9,7 @@ import { UserManager } from './components/UserManager';
 import { Room, Booking, ViewMode } from './types';
 import { StorageService } from './services/storage';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { ThemeProvider } from './contexts/ThemeContext';
 
 const AppContent: React.FC = () => {
   const { isAuthenticated, user } = useAuth();
@@ -22,11 +23,13 @@ const AppContent: React.FC = () => {
   const [modalInitialDate, setModalInitialDate] = useState<string | undefined>(undefined);
   const [modalInitialRoomId, setModalInitialRoomId] = useState<string | undefined>(undefined);
 
-  // Load initial data
+  // Load initial data and set default view
   useEffect(() => {
     if (isAuthenticated) {
       setRooms(StorageService.getRooms());
       setBookings(StorageService.getBookings());
+      // Ensure we always start at the calendar view upon login/load
+      setView('calendar');
     }
   }, [isAuthenticated]);
 
@@ -123,7 +126,9 @@ const AppContent: React.FC = () => {
 const App: React.FC = () => {
   return (
     <AuthProvider>
-      <AppContent />
+      <ThemeProvider>
+        <AppContent />
+      </ThemeProvider>
     </AuthProvider>
   );
 };

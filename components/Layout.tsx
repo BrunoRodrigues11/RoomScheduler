@@ -1,7 +1,8 @@
 import React from 'react';
-import { Calendar, Layout as LayoutIcon, Users, LogOut, Shield } from 'lucide-react';
+import { Calendar, Layout as LayoutIcon, Users, LogOut, Shield, Moon, Sun } from 'lucide-react';
 import { ViewMode } from '../types';
 import { useAuth } from '../contexts/AuthContext';
+import { useTheme } from '../contexts/ThemeContext';
 
 interface LayoutProps {
   currentView: ViewMode;
@@ -11,12 +12,17 @@ interface LayoutProps {
 
 export const Layout: React.FC<LayoutProps> = ({ currentView, onViewChange, children }) => {
   const { user, logout } = useAuth();
+  const { isDarkMode, toggleTheme } = useTheme();
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row">
+    <div className="min-h-screen flex flex-col md:flex-row transition-colors duration-200">
       {/* Sidebar Navigation */}
-      <aside className="w-full md:w-64 bg-slate-900 text-white flex-shrink-0 flex flex-col">
-        <div className="p-6">
+      <aside className="w-full md:w-64 bg-slate-900 text-white flex-shrink-0 flex flex-col border-r border-slate-800">
+        <div 
+          className="p-6 cursor-pointer hover:bg-slate-800 transition-colors" 
+          onClick={() => onViewChange('calendar')}
+          title="Ir para o início"
+        >
           <h1 className="text-xl font-bold flex items-center gap-2">
             <LayoutIcon className="w-6 h-6 text-blue-400" />
             RoomScheduler
@@ -79,8 +85,17 @@ export const Layout: React.FC<LayoutProps> = ({ currentView, onViewChange, child
         </nav>
 
         {/* User Footer */}
-        <div className="p-4 border-t border-slate-800">
-           <div className="flex items-center gap-3 mb-4 px-2">
+        <div className="p-4 border-t border-slate-800 space-y-3">
+           {/* Theme Toggle */}
+           <button 
+             onClick={toggleTheme}
+             className="w-full flex items-center gap-3 px-4 py-2 text-sm text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"
+           >
+             {isDarkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-blue-300" />}
+             {isDarkMode ? 'Modo Claro' : 'Modo Escuro'}
+           </button>
+
+           <div className="flex items-center gap-3 px-2">
               <div className="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center font-bold text-sm">
                  {user?.name.charAt(0)}
               </div>
@@ -99,7 +114,7 @@ export const Layout: React.FC<LayoutProps> = ({ currentView, onViewChange, child
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-1 bg-gray-50 overflow-hidden flex flex-col">
+      <main className="flex-1 bg-gray-50 dark:bg-slate-900 overflow-hidden flex flex-col transition-colors duration-200">
         {children}
       </main>
     </div>

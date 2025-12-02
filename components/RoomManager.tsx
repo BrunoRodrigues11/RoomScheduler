@@ -65,8 +65,8 @@ export const RoomManager: React.FC<RoomManagerProps> = ({ rooms, setRooms }) => 
   return (
     <div className="p-8 h-full overflow-y-auto">
       <header className="mb-8">
-        <h2 className="text-2xl font-bold text-slate-800">Gerenciar Salas</h2>
-        <p className="text-slate-500">
+        <h2 className="text-2xl font-bold text-slate-800 dark:text-white">Gerenciar Salas</h2>
+        <p className="text-slate-500 dark:text-slate-400">
             {canManage 
                 ? 'Cadastre e edite as salas disponíveis para reunião.' 
                 : 'Visualize as salas disponíveis.'}
@@ -75,9 +75,9 @@ export const RoomManager: React.FC<RoomManagerProps> = ({ rooms, setRooms }) => 
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Form Section - Only visible/enabled for Admin/Sec */}
-        <div className={`bg-white p-6 rounded-xl shadow-sm border border-slate-200 h-fit ${!canManage ? 'opacity-60 pointer-events-none grayscale' : ''}`}>
+        <div className={`bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 h-fit transition-colors ${!canManage ? 'opacity-60 pointer-events-none grayscale' : ''}`}>
           <div className="flex justify-between items-start mb-4">
-             <h3 className="text-lg font-semibold flex items-center gap-2">
+             <h3 className="text-lg font-semibold flex items-center gap-2 text-slate-800 dark:text-white">
                 {isEditing ? <Edit2 className="w-4 h-4"/> : <Plus className="w-4 h-4"/>}
                 {isEditing ? 'Editar Sala' : 'Nova Sala'}
              </h3>
@@ -86,44 +86,44 @@ export const RoomManager: React.FC<RoomManagerProps> = ({ rooms, setRooms }) => 
           
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Nome da Sala</label>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Nome da Sala</label>
               <input
                 type="text"
                 disabled={!canManage}
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full bg-white text-slate-900 border border-slate-300 rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                className="w-full bg-white dark:bg-slate-700 text-slate-900 dark:text-white border border-slate-300 dark:border-slate-600 rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all placeholder-slate-400"
                 placeholder="Ex: Sala de Vidro"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Localização</label>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Localização</label>
               <input
                 type="text"
                 disabled={!canManage}
                 value={formData.location}
                 onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                className="w-full bg-white text-slate-900 border border-slate-300 rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none"
+                className="w-full bg-white dark:bg-slate-700 text-slate-900 dark:text-white border border-slate-300 dark:border-slate-600 rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none"
                 placeholder="Ex: 2º Andar, Bloco B"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Capacidade (Pessoas)</label>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Capacidade (Pessoas)</label>
               <input
                 type="number"
                 disabled={!canManage}
                 value={formData.capacity}
                 onChange={(e) => setFormData({ ...formData, capacity: Number(e.target.value) })}
-                className="w-full bg-white text-slate-900 border border-slate-300 rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none"
+                className="w-full bg-white dark:bg-slate-700 text-slate-900 dark:text-white border border-slate-300 dark:border-slate-600 rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Observações</label>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Observações</label>
               <textarea
                 disabled={!canManage}
                 value={formData.notes}
                 onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                className="w-full bg-white text-slate-900 border border-slate-300 rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none"
+                className="w-full bg-white dark:bg-slate-700 text-slate-900 dark:text-white border border-slate-300 dark:border-slate-600 rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none"
                 rows={3}
                 placeholder="Projetor, TV, Ar condicionado..."
               />
@@ -133,14 +133,14 @@ export const RoomManager: React.FC<RoomManagerProps> = ({ rooms, setRooms }) => 
               <button
                 disabled={!canManage}
                 onClick={handleSave}
-                className="flex-1 bg-blue-600 text-white py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors disabled:bg-slate-300"
+                className="flex-1 bg-blue-600 text-white py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors disabled:bg-slate-300 dark:disabled:bg-slate-600"
               >
                 {isEditing ? 'Atualizar' : 'Cadastrar'}
               </button>
               {isEditing && (
                 <button
                   onClick={resetForm}
-                  className="px-4 py-2 bg-slate-100 text-slate-600 rounded-lg hover:bg-slate-200"
+                  className="px-4 py-2 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
                 >
                   Cancelar
                 </button>
@@ -152,22 +152,22 @@ export const RoomManager: React.FC<RoomManagerProps> = ({ rooms, setRooms }) => 
         {/* List Section */}
         <div className="lg:col-span-2 space-y-4">
           {!canManage && (
-             <div className="bg-blue-50 text-blue-800 p-3 rounded-lg text-sm mb-2 flex items-center gap-2">
+             <div className="bg-blue-50 dark:bg-blue-900/20 text-blue-800 dark:text-blue-200 p-3 rounded-lg text-sm mb-2 flex items-center gap-2">
                  <Info className="w-4 h-4" />
                  Seu perfil permite apenas visualizar as salas.
              </div>
           )}
 
           {rooms.map((room) => (
-            <div key={room.id} className="bg-white p-5 rounded-xl shadow-sm border border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 hover:shadow-md transition-shadow">
+            <div key={room.id} className="bg-white dark:bg-slate-800 p-5 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 hover:shadow-md transition-all">
               <div>
                 <div className="flex items-center gap-3">
-                  <h4 className="text-lg font-bold text-slate-800">{room.name}</h4>
-                  <span className={`text-xs px-2 py-1 rounded-full font-medium ${room.color || 'bg-gray-100'}`}>
+                  <h4 className="text-lg font-bold text-slate-800 dark:text-white">{room.name}</h4>
+                  <span className={`text-xs px-2 py-1 rounded-full font-medium ${room.color || 'bg-gray-100 text-gray-800 dark:bg-slate-700 dark:text-slate-300'}`}>
                     {room.capacity} Lugares
                   </span>
                 </div>
-                <div className="flex flex-wrap gap-x-6 gap-y-2 mt-2 text-sm text-slate-500">
+                <div className="flex flex-wrap gap-x-6 gap-y-2 mt-2 text-sm text-slate-500 dark:text-slate-400">
                   <div className="flex items-center gap-1">
                     <MapPin className="w-4 h-4" />
                     {room.location}
@@ -190,14 +190,14 @@ export const RoomManager: React.FC<RoomManagerProps> = ({ rooms, setRooms }) => 
                 <div className="flex items-center gap-2 w-full sm:w-auto">
                     <button
                     onClick={() => startEdit(room)}
-                    className="flex-1 sm:flex-none flex justify-center items-center gap-2 px-3 py-2 text-sm font-medium text-slate-600 bg-slate-50 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors"
+                    className="flex-1 sm:flex-none flex justify-center items-center gap-2 px-3 py-2 text-sm font-medium text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-slate-700 rounded-lg hover:bg-blue-50 dark:hover:bg-slate-600 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                     >
                     <Edit2 className="w-4 h-4" />
                     Editar
                     </button>
                     <button
                     onClick={() => handleDelete(room.id)}
-                    className="flex-1 sm:flex-none flex justify-center items-center gap-2 px-3 py-2 text-sm font-medium text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-colors"
+                    className="flex-1 sm:flex-none flex justify-center items-center gap-2 px-3 py-2 text-sm font-medium text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/40 transition-colors"
                     >
                     <Trash2 className="w-4 h-4" />
                     </button>
@@ -207,7 +207,7 @@ export const RoomManager: React.FC<RoomManagerProps> = ({ rooms, setRooms }) => 
           ))}
           
           {rooms.length === 0 && (
-            <div className="text-center py-12 bg-white rounded-xl border border-dashed border-slate-300 text-slate-400">
+            <div className="text-center py-12 bg-white dark:bg-slate-800 rounded-xl border border-dashed border-slate-300 dark:border-slate-600 text-slate-400">
               <p>Nenhuma sala cadastrada.</p>
             </div>
           )}
